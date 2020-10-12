@@ -2,7 +2,7 @@
 import './App.css';
 
 //react
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 //jwt-decode
@@ -56,44 +56,58 @@ if(token){
   }
 }
 
-// let authenticated;
-// const token = localStorage.FBIdToken;
-// if (token) {
-//   const decodedToken = jwtDecode(token);
-//   if (decodedToken.exp * 1000 < Date.now()) {
-//     authenticated = false;
-//     window.location.href = '/login';
-//   } else {
+// function App () {
+//   //connect routes to components
+//   //set up theme provider and the navbar
+//   return (
+//     <MuiThemeProvider theme={theme}>
+//       <Provider store = {store}>
+//       <div className="App">
+//       <Router>
+//       <Navbar/>
+       
+//         <div className="container">
+        
+//         <Switch>
+//           <Route exact path="/" component={home}/>
+//           <AuthRoute exact path="/login" component={login} authenticated ={authenticated}/>
+//           <AuthRoute exact path="/signup" component={signup} authenticated ={authenticated}/>
+//         </Switch>
+//         </div>
+        
+//       </Router>
+//     </div>
+//       </Provider>
     
-//     authenticated = true;
-//   }
+//     </MuiThemeProvider>
+//   );
 // }
 
-function App () {
-  //connect routes to components
-  //set up theme provider and the navbar
-  return (
-    <MuiThemeProvider theme={theme}>
-      <Provider store = {store}>
-      <div className="App">
-      <Router>
-      <Navbar/>
-       
-        <div className="container">
-        
-        <Switch>
-          <Route exact path="/" component={home}/>
-          <AuthRoute exact path="/login" component={login} authenticated ={authenticated}/>
-          <AuthRoute exact path="/signup" component={signup} authenticated ={authenticated}/>
-        </Switch>
-        </div>
-        
-      </Router>
-    </div>
-      </Provider>
-    
-    </MuiThemeProvider>
-  );
+class App extends Component {
+  render() {
+    return (
+          <MuiThemeProvider theme={theme}>
+            <Provider store = {store}>
+            <div className="App">
+            <Router>
+            <Navbar/>
+             
+              <div className="container">
+              
+              <Switch>
+                <Route exact path="/" component={home}/>
+                <AuthRoute exact path="/login" component={login} authenticated ={authenticated}/>
+                <AuthRoute exact path="/signup" component={signup} authenticated ={authenticated}/>
+              </Switch>
+              </div>
+              
+            </Router>
+          </div>
+            </Provider>
+          
+          </MuiThemeProvider>
+        );
+  }
 }
 
 export default App;

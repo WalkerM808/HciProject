@@ -1,4 +1,4 @@
-import {SET_ERRORS, CLEAR_ERRORS} from '../tyeps';
+import {SET_ERRORS, CLEAR_ERRORS} from '../types';
 import { LOADING_UI } from '../types';
 
 const initialState = {
