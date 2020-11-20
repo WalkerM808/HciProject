@@ -1,13 +1,18 @@
 //react
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
 //material-ui
 import Grid from '@material-ui/core/Grid'
+
+//redux
+import { connect } from 'react-redux'
 
 //axios
 import axios from 'axios'
 
 //components
+import MyQuiz from '../components/MyQuiz'
 import Quiz from '../components/Quiz'
 import Profile from '../components/Profile'
 
@@ -31,10 +36,9 @@ const styles = {
     },
 }
 
-class home extends Component {
+class myQuizzes extends Component {
     state = {
         quizzes: null,
-        search: "",
     }
 
     
@@ -51,15 +55,12 @@ class home extends Component {
     }
 
     //filters the quizzes using the search bar
-    filterQuizzes = () => {
-        
-
-        let temp = this.state.search
+    filterQuizzes = (userName) => {
         let result = [];
         var i;
         for (i = 0; i < this.state.quizzes.length; i++) {
-            if(this.state.quizzes[i].Name.endsWith(temp, temp.length) ){
-                result.push(<Quiz key = {this.state.quizzes[i].Id.Id} quiz= {this.state.quizzes[i]}/>);
+            if(this.state.quizzes[i].Handle == userName.name){
+                result.push(<MyQuiz key = {this.state.quizzes[i].Id.Id} quiz= {this.state.quizzes[i]}/>);
             }
         } 
         
@@ -77,22 +78,46 @@ class home extends Component {
     render() {
         const {classes} = this.props
 
-        let recentQuizzesMarkup = this.state.quizzes ? this.filterQuizzes() : <p>Getting Data</p>
+        
+        let name = this.props.user.userCredentials ? this.props.user.userCredentials.handle : null
+        let recentQuizzesMarkup;
+        if({name}){
+            
+            recentQuizzesMarkup =  this.state.quizzes ? this.filterQuizzes({name}) : <p>Getting Data</p>
+        }
+
+
+
         return (
             <Grid container spacing={10}>
                 <Grid item sm={8} xs={12}>
                     <Card className={classes.card}>
                         <CardContent className={classes.content}>
-                            <Typography variant="h4">Welcome to Quiz App</Typography>
-                            <TextField id="search"  type="text" label="Search:" className={classes.textField} onChange={this.setChanges} fullWidth/>
-                
+                            <Typography variant="h4">Your Quizzes</Typography>
                         </CardContent>
                     </Card>
                     {recentQuizzesMarkup}
+                    <Card className={classes.card}>
+            <CardContent className={classes.content}>
+            <Grid container spacing={10} >
+                        <Grid item sm >
+                        <Button type="button" variant="contained" color="primary" className={classes.button} component={Link} to = "/">Return</Button>
+                        </Grid>
+                        
+                        <Grid item sm>
+                            
+                        </Grid>
+
+                        <Grid item sm>
+                            
+                        </Grid>
                 </Grid>
-                <Grid item sm={4} xs={12}>
-                    <Profile/>
+                
+            </CardContent>
+            </Card>
                 </Grid>
+                
+                
             </Grid>
 
 
@@ -100,4 +125,8 @@ class home extends Component {
     }
 }
 
-export default withStyles(styles)(home)
+const mapStateToProps = (state) => ({
+    user: state.user
+  });
+
+export default connect(mapStateToProps)(withStyles(styles)(myQuizzes));

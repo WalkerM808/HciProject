@@ -13,6 +13,7 @@ import Button from '@material-ui/core/button'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
+import Divider from '@material-ui/core/Divider'
 
 
 //material-ui styles for component elements
@@ -53,16 +54,6 @@ class login extends Component {
         this.setState({ errors: nextProps.UI.errors });
       }
     }
-    // submit = (e) => {
-    //     e.preventDefault();
-
-    //     const userData ={
-    //         email: this.state.email,
-    //         password: this.state.password
-    //     };
-    //     this.props.loginUser(userData, this.props.history);
-        
-    // }
 
     submit = (e) => {
         e.preventDefault();
@@ -90,6 +81,7 @@ class login extends Component {
         return (
             <Grid container className={classes.form}>
                 <Grid item sm>
+                    
                     <Typography variant="h3" className={classes.pageTitle}>
                         Login
                     </Typography>
@@ -106,9 +98,10 @@ class login extends Component {
                                 <Button type="submit" variant="contained" colors="secondary" className={classes.button}>Login</Button>
                             </Grid>
                             <Grid item sm/>
+                            
                             <Grid item sm/>
                             <Grid item sm>
-                                <Button type="button" variant="contained" colors="secondary" className={classes.button} component={Link} to = "/signup">Signup</Button>
+                                <Button type="button" variant="contained" colors="secondary" className={classes.button} component={Link} to = "/Signup">Signup</Button>
                             </Grid>
                         </Grid>
                         
@@ -116,7 +109,12 @@ class login extends Component {
                     </form>
                 </Grid>
                 <Grid item sm/>
-                <Grid item sm/>
+                <Grid item sm>
+                <Typography variant="h3" className={classes.pageTitle}> Quiz App</Typography>
+                <Divider></Divider>
+                <Typography variant="h6" colors="secondary" className={classes.textField}> Quiz App is a product designed to help students and professors teach and study. You can create 
+                short quizzes that can help you gauge your knowledge on important subjects.</Typography>
+                </Grid>
 
             </Grid>
         )

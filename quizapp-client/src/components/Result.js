@@ -8,13 +8,14 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/button'
 import withStyles from '@material-ui/core/styles/withStyles'
+import Divider from '@material-ui/core/Divider';
 
-//material-ui styles for component elements
 const styles = {
     card: {
         display: 'flex',
         maxwidth: 200,
-        marginBottom: 10 
+        minwidth: 200,
+        margin: '20px auto 20px auto'
     },
     content: {
         display: 'inline-block',
@@ -26,17 +27,18 @@ const styles = {
 
 //Card component that will hold quiz info
 //display the name, the first problem, and a button to take the quiz
-class Quiz extends Component {
+class Result extends Component {
     render() {
-        const {classes, quiz: {Name, Question1, Id}} = this.props
-        
+        const {classes, result: {Name, Score, Title}} = this.props
         //const [x] = this.props.Question1
         return (
             <Card className={classes.card}>
                 <CardContent className={classes.content}>
-                    <Typography variant="h4">{Name}</Typography>
-                    <Typography variant="h6" color="textSecondary">{Question1[0]}</Typography>
-                    <Button type="button" variant="contained" colors="secondary" className={classes.content} component={Link} to ={'/takeQuiz/'+ {Id}.Id}>Take Quiz</Button>
+                    <Typography variant="h4">{Title}</Typography>
+                    <Divider />
+                    <Typography variant="h6" color="textSecondary">Score: {Score}</Typography>
+                    
+                    
                     
                     
                 </CardContent>
@@ -45,4 +47,4 @@ class Quiz extends Component {
     }
 }
 
-export default withStyles(styles)(Quiz);
+export default withStyles(styles)(Result);

@@ -1,16 +1,17 @@
 //react
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-
-//axios
-import axios from 'axios'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 //material-ui
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/button'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
-import withStyles from '@material-ui/core/styles/withStyles'
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+//redux
+import {connect} from 'react-redux';
+import {signupUser} from '../redux/actions/userActions';
 
 
 //material-ui styles for component elements
@@ -49,6 +50,13 @@ class signup extends Component {
             errors: {}
         }
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.errors) {
+          this.setState({ errors: nextProps.UI.errors });
+        }
+      }
+
     //makes call to the server with the users info to sign in
     submit = (e) => {
         e.preventDefault();
@@ -58,19 +66,11 @@ class signup extends Component {
             password: this.state.password,
             confirmPassword: this.state.confirmPassword,
             handle: this.state.handle
-        }
+        };
+
+        this.props.signupUser(newUserData, this.props.history);
         
-        axios.post('/signup', newUserData)
-            .then(res => {
-                console.log(res.data);
-                localStorage.setItem('FBIdToken', 'Bearer ' + res.data.token);
-                this.props.history.push('/');
-            })
-            .catch(err => {
-                this.setState({
-                    errors: err.response.data
-                })
-            })
+        
     }
 
     //updates the components state when the text fields are eddited
@@ -125,7 +125,15 @@ class signup extends Component {
 }
 
 signup.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    signupUser: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(signup)
+const mapStateToProps = (state) => ({
+    user:state.user,
+    UI: state.UI
+})
+
+export default connect(mapStateToProps, {signupUser})(withStyles(styles)(signup));
